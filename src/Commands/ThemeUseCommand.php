@@ -3,6 +3,7 @@
 namespace Theme\Commands;
 
 use Illuminate\Console\Command;
+use InvalidArgumentException;
 use Theme\Theme;
 
 class ThemeUseCommand extends Command
@@ -48,10 +49,14 @@ class ThemeUseCommand extends Command
      */
     public function handle()
     {
-        $this->theme->use(
-            $name = $this->argument('name'),
-            $this->option('symlink')
-        );
+        try {
+            $this->theme->use(
+                $name = $this->argument('name'),
+                $this->option('symlink')
+            );
+        } catch (InvalidArgumentException $e) {
+            return $this->error($e->getMessage());
+        }
 
         $this->line("Linked theme [<info>{$name}</info>].");
     }

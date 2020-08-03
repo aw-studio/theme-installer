@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,15 +14,20 @@
 </head>
 <body>
 
-    @include('partials.header.header')
+    <div class="container">
+        @include('partials.header.header')
 
-    <main>
-        @yield('content')
-    </main>
+        <main>
+            @yield('content')
+        </main>
+    </div>
+    
+
+    @include('partials.footer.footer')
 
     {{-- Scripts --}}
     <script src="{{asset('js/app.js')}}?v={{filemtime('js/app.js')}}"></script>
     <x-scripts/>
-    
+
 </body>
 </html>

@@ -126,7 +126,11 @@ class Theme
             return;
         }
 
-        return $this->theme = require_once $path;
+        if (! realpath($this->getThemePath($theme = require_once $path))) {
+            return;
+        }
+
+        return $this->theme = $theme;
     }
 
     /**
