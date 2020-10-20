@@ -51,6 +51,6 @@ class MakeThemeCommand extends Command
             $name = $this->argument('name')
         );
 
-        $this->line("Created theme [<info>{$name}</info>] in theme/{$name}.");
+        $this->line("Created theme [<info>{$name}</info>] in themes/{$name}.");
     }
 }

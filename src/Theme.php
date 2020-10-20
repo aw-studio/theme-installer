@@ -4,6 +4,7 @@ namespace Theme;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\View;
 use Illuminate\View\FileViewFinder;
 use InvalidArgumentException;
 
@@ -141,14 +142,15 @@ class Theme
      */
     public function apply($name)
     {
-        $this->laravel->bind('view.finder', function ($app) use ($name) {
-            $paths = array_merge(
-                [$this->getThemePath($name) . '/views'],
-                $app['config']['view.paths'],
-            );
+        View::addNamespace('theme', $this->getThemePath($name) . '/views');
+        // $this->laravel->bind('view.finder', function ($app) use ($name) {
+        //     $paths = array_merge(
+        //         [$this->getThemePath($name) . '/views'],
+        //         $app['config']['view.paths'],
+        //     );
 
-            return new FileViewFinder($app['files'], $paths);
-        });
+        //     return new FileViewFinder($app['files'], $paths);
+        // });
     }
 
     /**
@@ -199,7 +201,7 @@ class Theme
      * @param  string $name
      * @return void
      */
-    protected function getThemePath($name)
+    public function getThemePath($name)
     {
         return resource_path("themes/{$name}");
     }

@@ -42,10 +42,10 @@ class ThemeInstallerServiceProvider extends ServiceProvider
     public function applyUsedTheme()
     {
         if (! $theme = $this->app['theme']->using()) {
-            return;
+            $this->loadViewsFrom(resource_path('views'), 'theme');
+        } else {
+            $this->loadViewsFrom($this->app['theme']->getThemePath($theme) . '/views', 'theme');
         }
-
-        $this->app['theme']->apply($theme);
     }
 
     /**
